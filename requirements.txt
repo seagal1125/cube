@@ -1,0 +1,4 @@
+streamlit
+pycuber
+kociemba
+matplotlib
