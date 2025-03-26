@@ -215,12 +215,12 @@ if st.button("🎨 轉換並驗證 Facelet 字串"):
             converted = ''.join(color_mapping[c] for c in cleaned)
             st.session_state.converted_facelet = converted
             st.success("✅ 轉換成功！")
-            st.text_area("🔁 轉換後的 Facelet 字串：", value=converted, height=100, key="converted_facelet")
+            st.text_area("🔁 轉換後的 Facelet 字串：", value=converted, height=100)
 
             # 嘗試還原，驗證是否合法
             try:
                 _ = kociemba.solve(converted)
-                st.success("✅ 這是一個合法的魔術方塊狀態！可以還原。")
+                st.success("✅ 這是一個合法的魔術方塊狀態！可以還原的。")
             except Exception as e:
                 st.error(f"❌ 無法還原，這是一個非法的狀態。\n錯誤訊息：{e}")
 
@@ -230,12 +230,15 @@ if st.button("🎨 轉換並驗證 Facelet 字串"):
 
 # ---------- 使用者輸入 Facelet 字串 ----------
 st.subheader("🎨 輸入 Facelet 字串（共 54 字元）")
-#facelet_input = st.text_area("請輸入 54 個 URFDLB 字元：")
 if 'converted_facelet' not in st.session_state:
     st.session_state.converted_facelet = ''
 
-# 使用 session state 的值，但不在 text_area 中設置 key
-facelet_input = st.session_state.converted_facelet
+# 创建可交互的text_area，并与session state关联
+facelet_input = st.text_area(
+    "請輸入 54 個 URFDLB 字元：",
+    value=st.session_state.converted_facelet,
+    key="converted_facelet"  # 这是关键：添加key来关联session state
+)
 
 input_str = facelet_input.strip().upper()
 input_len = len(input_str)
@@ -274,6 +277,8 @@ if st.button("📸 預覽輸入狀態（不解）"):
 
 # ---------- 執行還原解法 ----------
 if st.button("🧠 開始解法還原"):
+    input_str = st.session_state.converted_facelet
+    input_len = len(input_str)
     if input_len != 54:
         st.error("❌ 字元數量錯誤，請輸入剛好 54 個 URFDLB 字元。")
     elif invalid_chars:
@@ -382,4 +387,4 @@ if st.session_state.states:
         return result
 
     facelet_now = cube_to_facelet_str(st.session_state.states[st.session_state.current_step])
-    st.text_area("🧾 目前狀態 Facelet 字串（可複製）：", value=facelet_now, height=100)
+    #st.text_area("🧾 目前狀態 Facelet 字串（可複製）：", value=facelet_now, height=100)
