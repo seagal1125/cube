@@ -188,9 +188,54 @@ if st.button("✅ 套用打亂公式"):
     except Exception as e:
         st.error(f"❌ 打亂公式錯誤：{e}")
 
+
+
+# ---------- 顏色代碼轉合法 Facelet 檢查 ----------
+st.subheader("🌈 顏色代碼轉 Facelet 字串並驗證")
+
+color_code_input = st.text_area("請輸入 54 個顏色代碼字元（例如：o, r, w, b, y, g）")
+
+color_mapping = {
+    'o': 'L',  # orange
+    'r': 'R',  # red
+    'w': 'U',  # white
+    'b': 'B',  # blue
+    'y': 'D',  # yellow
+    'g': 'F'   # green
+}
+
+if st.button("🎨 轉換並驗證 Facelet 字串"):
+    cleaned = color_code_input.strip().lower().replace(' ', '')
+    if len(cleaned) != 54:
+        st.error("❌ 請輸入剛好 54 個字元的顏色代碼。")
+    elif any(c not in color_mapping for c in cleaned):
+        st.error(f"❌ 發現未定義的顏色字元：{set(c for c in cleaned if c not in color_mapping)}")
+    else:
+        try:
+            converted = ''.join(color_mapping[c] for c in cleaned)
+            st.session_state.converted_facelet = converted
+            st.success("✅ 轉換成功！")
+            st.text_area("🔁 轉換後的 Facelet 字串：", value=converted, height=100, key="converted_facelet")
+
+            # 嘗試還原，驗證是否合法
+            try:
+                _ = kociemba.solve(converted)
+                st.success("✅ 這是一個合法的魔術方塊狀態！可以還原。")
+            except Exception as e:
+                st.error(f"❌ 無法還原，這是一個非法的狀態。\n錯誤訊息：{e}")
+
+        except Exception as e:
+            st.error(f"❌ 發生轉換錯誤：{e}")
+
+
 # ---------- 使用者輸入 Facelet 字串 ----------
 st.subheader("🎨 輸入 Facelet 字串（共 54 字元）")
-facelet_input = st.text_area("請輸入 54 個 URFDLB 字元：")
+#facelet_input = st.text_area("請輸入 54 個 URFDLB 字元：")
+if 'converted_facelet' not in st.session_state:
+    st.session_state.converted_facelet = ''
+
+# 使用 session state 的值，但不在 text_area 中設置 key
+facelet_input = st.session_state.converted_facelet
 
 input_str = facelet_input.strip().upper()
 input_len = len(input_str)
@@ -271,42 +316,6 @@ if st.button("🧠 開始解法還原"):
                 st.session_state.current_step = 0
             except Exception as e:
                 st.error(f"❌ 解法錯誤：{e}")
-
-# ---------- 顏色代碼轉合法 Facelet 檢查 ----------
-st.subheader("🌈 顏色代碼轉 Facelet 字串並驗證")
-
-color_code_input = st.text_area("請輸入 54 個顏色代碼字元（例如：o, r, w, b, y, g）")
-
-color_mapping = {
-    'o': 'L',  # orange
-    'r': 'R',  # red
-    'w': 'U',  # white
-    'b': 'B',  # blue
-    'y': 'D',  # yellow
-    'g': 'F'   # green
-}
-
-if st.button("🎨 轉換並驗證 Facelet 字串"):
-    cleaned = color_code_input.strip().lower().replace(' ', '')
-    if len(cleaned) != 54:
-        st.error("❌ 請輸入剛好 54 個字元的顏色代碼。")
-    elif any(c not in color_mapping for c in cleaned):
-        st.error(f"❌ 發現未定義的顏色字元：{set(c for c in cleaned if c not in color_mapping)}")
-    else:
-        try:
-            converted = ''.join(color_mapping[c] for c in cleaned)
-            st.success("✅ 轉換成功！")
-            st.text_area("🔁 轉換後的 Facelet 字串：", value=converted, height=100)
-
-            # 嘗試還原，驗證是否合法
-            try:
-                _ = kociemba.solve(converted)
-                st.success("✅ 這是一個合法的魔術方塊狀態！可以還原。")
-            except Exception as e:
-                st.error(f"❌ 無法還原，這是一個非法的狀態。\n錯誤訊息：{e}")
-
-        except Exception as e:
-            st.error(f"❌ 發生轉換錯誤：{e}")
 
 # ---------- 顯示動畫 ----------
 if st.session_state.states:
