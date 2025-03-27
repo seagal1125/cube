@@ -341,7 +341,10 @@ if st.session_state.states:
         "B U B' U'":"B U B' U'",
         "B' U' B U":"B' U' B U",
         "F U F' U'":"F U F' U'",
-        "F' U' F U":"F' U' F U"
+        "F' U' F U":"F' U' F U",
+        "(右手小魚)R U R' U R U' U' R'":"R U R' U R U' U' R'",
+        "(左手小魚)L' U' L U' L' U U L":"L' U' L U' L' U U L",
+        "(雙蚯蚓)R U' L' U R' U' L":"R U' L' U R' U' L"
         
     }
     
