@@ -28,10 +28,10 @@ face_names = {
 
 # ---------- WCA 標準 Facelet 顏色對應 ----------
 facelet_to_color = {
-    'U': 'white',
+    'U': 'yellow',
     'R': 'red',
     'F': 'green',
-    'D': 'yellow',
+    'D': 'white',
     'L': 'orange',
     'B': 'blue'
 }
@@ -331,6 +331,252 @@ if st.session_state.states:
     current_cube = st.session_state.states[st.session_state.current_step]
     buf = draw_cube(current_cube)
     st.image(buf, caption=f"第 {st.session_state.current_step} 步")
+
+    # 添加预设公式选择
+    preset_formulas = {
+        "R U R' U'": "R U R' U'",
+        "L' U' L U": "L' U' L U",
+        "R' U' R U": "R' U' R U",
+        "L U L' U'": "L U L' U'",
+        "B U B' U'":"B U B' U'",
+        "B' U' B U":"B' U' B U",
+        "F U F' U'":"F U F' U'",
+        "F' U' F U":"F' U' F U"
+        
+    }
+    
+    selected_formula = st.selectbox(
+        "🔄 选择预设旋转公式(上左下右)：",
+        options=list(preset_formulas.keys()),
+        index=0
+    )
+    
+    # 添加自定义公式输入
+    custom_formula = st.text_input(
+        "🔄 或输入自定义旋转公式（如：R U R' U'）：",
+        value=preset_formulas[selected_formula]
+    )
+    
+    # 使用选择的公式或自定义公式
+    rotate_formula = custom_formula
+
+    # 添加六面旋轉按鈕
+    st.write("快速旋轉按鈕：")
+    
+    # 第一行：U面和D面
+    col_u1, col_u2, col_d1, col_d2 = st.columns(4)
+    with col_u1:
+        if st.button("U ↻"):
+            rotate_formula = "U"
+            moves = [rotate_formula]
+            new_cube = current_cube.copy()
+            new_cube(pc.Formula(' '.join(moves)))
+            st.session_state.states = st.session_state.states[:st.session_state.current_step + 1]
+            st.session_state.states.append(new_cube)
+            st.session_state.current_step += 1
+            st.rerun()
+    with col_u2:
+        if st.button("U' ↺"):
+            rotate_formula = "U'"
+            moves = [rotate_formula]
+            new_cube = current_cube.copy()
+            new_cube(pc.Formula(' '.join(moves)))
+            st.session_state.states = st.session_state.states[:st.session_state.current_step + 1]
+            st.session_state.states.append(new_cube)
+            st.session_state.current_step += 1
+            st.rerun()
+    with col_d1:
+        if st.button("D ↻"):
+            rotate_formula = "D"
+            moves = [rotate_formula]
+            new_cube = current_cube.copy()
+            new_cube(pc.Formula(' '.join(moves)))
+            st.session_state.states = st.session_state.states[:st.session_state.current_step + 1]
+            st.session_state.states.append(new_cube)
+            st.session_state.current_step += 1
+            st.rerun()
+    with col_d2:
+        if st.button("D' ↺"):
+            rotate_formula = "D'"
+            moves = [rotate_formula]
+            new_cube = current_cube.copy()
+            new_cube(pc.Formula(' '.join(moves)))
+            st.session_state.states = st.session_state.states[:st.session_state.current_step + 1]
+            st.session_state.states.append(new_cube)
+            st.session_state.current_step += 1
+            st.rerun()
+
+    # 第二行：R面和L面
+    col_r1, col_r2, col_l1, col_l2 = st.columns(4)
+    with col_r1:
+        if st.button("R ↻"):
+            rotate_formula = "R"
+            moves = [rotate_formula]
+            new_cube = current_cube.copy()
+            new_cube(pc.Formula(' '.join(moves)))
+            st.session_state.states = st.session_state.states[:st.session_state.current_step + 1]
+            st.session_state.states.append(new_cube)
+            st.session_state.current_step += 1
+            st.rerun()
+    with col_r2:
+        if st.button("R' ↺"):
+            rotate_formula = "R'"
+            moves = [rotate_formula]
+            new_cube = current_cube.copy()
+            new_cube(pc.Formula(' '.join(moves)))
+            st.session_state.states = st.session_state.states[:st.session_state.current_step + 1]
+            st.session_state.states.append(new_cube)
+            st.session_state.current_step += 1
+            st.rerun()
+    with col_l1:
+        if st.button("L ↻"):
+            rotate_formula = "L"
+            moves = [rotate_formula]
+            new_cube = current_cube.copy()
+            new_cube(pc.Formula(' '.join(moves)))
+            st.session_state.states = st.session_state.states[:st.session_state.current_step + 1]
+            st.session_state.states.append(new_cube)
+            st.session_state.current_step += 1
+            st.rerun()
+    with col_l2:
+        if st.button("L' ↺"):
+            rotate_formula = "L'"
+            moves = [rotate_formula]
+            new_cube = current_cube.copy()
+            new_cube(pc.Formula(' '.join(moves)))
+            st.session_state.states = st.session_state.states[:st.session_state.current_step + 1]
+            st.session_state.states.append(new_cube)
+            st.session_state.current_step += 1
+            st.rerun()
+
+    # 第三行：F面和B面
+    col_f1, col_f2, col_b1, col_b2 = st.columns(4)
+    with col_f1:
+        if st.button("F ↻"):
+            rotate_formula = "F"
+            moves = [rotate_formula]
+            new_cube = current_cube.copy()
+            new_cube(pc.Formula(' '.join(moves)))
+            st.session_state.states = st.session_state.states[:st.session_state.current_step + 1]
+            st.session_state.states.append(new_cube)
+            st.session_state.current_step += 1
+            st.rerun()
+    with col_f2:
+        if st.button("F' ↺"):
+            rotate_formula = "F'"
+            moves = [rotate_formula]
+            new_cube = current_cube.copy()
+            new_cube(pc.Formula(' '.join(moves)))
+            st.session_state.states = st.session_state.states[:st.session_state.current_step + 1]
+            st.session_state.states.append(new_cube)
+            st.session_state.current_step += 1
+            st.rerun()
+    with col_b1:
+        if st.button("B ↻"):
+            rotate_formula = "B"
+            moves = [rotate_formula]
+            new_cube = current_cube.copy()
+            new_cube(pc.Formula(' '.join(moves)))
+            st.session_state.states = st.session_state.states[:st.session_state.current_step + 1]
+            st.session_state.states.append(new_cube)
+            st.session_state.current_step += 1
+            st.rerun()
+    with col_b2:
+        if st.button("B' ↺"):
+            rotate_formula = "B'"
+            moves = [rotate_formula]
+            new_cube = current_cube.copy()
+            new_cube(pc.Formula(' '.join(moves)))
+            st.session_state.states = st.session_state.states[:st.session_state.current_step + 1]
+            st.session_state.states.append(new_cube)
+            st.session_state.current_step += 1
+            st.rerun()
+
+    # 添加中心层旋转按钮
+    st.write("M层（中间层）、E层（赤道层）、S层（站立层）中心层 旋转按钮：")
+    
+    # M层（中间层）、E层（赤道层）、S层（站立层）
+    col_m1, col_m2, col_e1, col_e2, col_s1, col_s2 = st.columns(6)
+    
+    with col_m1:
+        if st.button("M ↻"):
+            rotate_formula = "L' R"
+            moves = re.findall(r"[URFDLB][2']?", rotate_formula.upper())
+            new_cube = current_cube.copy()
+            new_cube(pc.Formula(' '.join(moves)))
+            st.session_state.states = st.session_state.states[:st.session_state.current_step + 1]
+            st.session_state.states.append(new_cube)
+            st.session_state.current_step += 1
+            st.rerun()
+            
+    with col_m2:
+        if st.button("M' ↺"):
+            rotate_formula = "L R'"
+            moves = re.findall(r"[URFDLB][2']?", rotate_formula.upper())
+            new_cube = current_cube.copy()
+            new_cube(pc.Formula(' '.join(moves)))
+            st.session_state.states = st.session_state.states[:st.session_state.current_step + 1]
+            st.session_state.states.append(new_cube)
+            st.session_state.current_step += 1
+            st.rerun()
+            
+    with col_e1:
+        if st.button("E ↻"):
+            rotate_formula = "U D'"
+            moves = re.findall(r"[URFDLB][2']?", rotate_formula.upper())
+            new_cube = current_cube.copy()
+            new_cube(pc.Formula(' '.join(moves)))
+            st.session_state.states = st.session_state.states[:st.session_state.current_step + 1]
+            st.session_state.states.append(new_cube)
+            st.session_state.current_step += 1
+            st.rerun()
+            
+    with col_e2:
+        if st.button("E' ↺"):
+            rotate_formula = "U' D"
+            moves = re.findall(r"[URFDLB][2']?", rotate_formula.upper())
+            new_cube = current_cube.copy()
+            new_cube(pc.Formula(' '.join(moves)))
+            st.session_state.states = st.session_state.states[:st.session_state.current_step + 1]
+            st.session_state.states.append(new_cube)
+            st.session_state.current_step += 1
+            st.rerun()
+            
+    with col_s1:
+        if st.button("S ↻"):
+            rotate_formula = "F' B"
+            moves = re.findall(r"[URFDLB][2']?", rotate_formula.upper())
+            new_cube = current_cube.copy()
+            new_cube(pc.Formula(' '.join(moves)))
+            st.session_state.states = st.session_state.states[:st.session_state.current_step + 1]
+            st.session_state.states.append(new_cube)
+            st.session_state.current_step += 1
+            st.rerun()
+            
+    with col_s2:
+        if st.button("S' ↺"):
+            rotate_formula = "F B'"
+            moves = re.findall(r"[URFDLB][2']?", rotate_formula.upper())
+            new_cube = current_cube.copy()
+            new_cube(pc.Formula(' '.join(moves)))
+            st.session_state.states = st.session_state.states[:st.session_state.current_step + 1]
+            st.session_state.states.append(new_cube)
+            st.session_state.current_step += 1
+            st.rerun()
+
+    # 執行旋轉公式按鈕
+    if st.button("↻ 執行旋轉公式"):
+        try:
+            moves = re.findall(r"[URFDLB][2']?", rotate_formula.upper())
+            if moves:
+                new_cube = current_cube.copy()
+                new_cube(pc.Formula(' '.join(moves)))
+                st.session_state.states = st.session_state.states[:st.session_state.current_step + 1]
+                st.session_state.states.append(new_cube)
+                st.session_state.current_step += 1
+                st.rerun()
+        except Exception as e:
+            st.error(f"❌ 旋轉公式錯誤：{e}")
 
     # 控制步驟按鈕
     col1, col2, col3 = st.columns(3)
