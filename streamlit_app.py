@@ -334,17 +334,27 @@ if st.session_state.states:
 
     # 添加预设公式选择
     preset_formulas = {
-        "R U R' U'": "R U R' U'",
-        "L' U' L U": "L' U' L U",
-        "R' U' R U": "R' U' R U",
-        "L U L' U'": "L U L' U'",
-        "B U B' U'":"B U B' U'",
-        "B' U' B U":"B' U' B U",
-        "F U F' U'":"F U F' U'",
-        "F' U' F U":"F' U' F U",
+        "(右手上左下右)R U R' U'": "R U R' U'",
+        "(左手上右下左)L' U' L U": "L' U' L U",
+        "(右手上左下右90)B U B' U'":"B U B' U'",
+        "(左手上右下左90)F' U' F U":"F' U' F U",
+        "(右手上左下右180)L U L' U'": "L U L' U'",
+        "(左手上右下左180)R' U' R U": "R' U' R U",
+        
+        "(右手上左下右270)F U F' U'":"F U F' U'",
+        "(左手上右下左270)B' U' B U":"B' U' B U",
+        
+        
         "(右手小魚)R U R' U R U' U' R'":"R U R' U R U' U' R'",
         "(左手小魚)L' U' L U' L' U U L":"L' U' L U' L' U U L",
-        "(雙蚯蚓)R U' L' U R' U' L":"R U' L' U R' U' L"
+        "(雙蚯蚓)R U' L' U R' U' L":"R U' L' U R' U' L",
+        "(右手小魚 90)B U B' U B U' U' B'":"B U B' U B U' U' B'",
+        "(右手小魚 180)L U L' U L U' U' L'":"L U L' U L U' U' L'",
+        "(右手小魚 270)F U F' U F U' U' F'":"F U F' U F U' U' F'",
+        "(左手小魚 90)F' U' F U' F' U U F":"F' U' F U' F' U U F",
+        "(左手小魚 180)R' U' R U' R' U U R":"R' U' R U' R' U U R",
+        "(左手小魚 270)B' U' B U' B' U U B":"B' U' B U' B' U U B",
+        
         
     }
     
